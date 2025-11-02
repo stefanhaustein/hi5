@@ -1,28 +1,53 @@
 package org.kobjects.hi5.z80
 
-object Op {
-    const val ADD_HL_DE = 0x09
-    const val ADD_HL_SP = 0x29
-    const val CALL = 0xbd
-    const val DEC_HL = 0xb2
-    const val INC_HL = 0x32
-    const val JP_HL = 0xe9
-    const val LD_B__HL = 0x46
-    const val LD_C__HL = 0x3e
-    const val LD_H_B = 0x60
-    const val LD_L_C = 0x69
-    const val LD__HL_D = 0x72
-    const val LD__HL_E = 0x73
-    const val LD_HL_NN = 0x21
-    const val LD_SP_HL = 0xf9
-    const val NOP = 0
-    const val PUSH_AF = 0xe5
-    const val PUSH_BC = 0xb5
-    const val PUSH_DE = 0xc5
-    const val PUSH_HL = 0xd5
-    const val POP_AF = 0xe1
-    const val POP_BC = 0xb1
-    const val POP_DE = 0xc1
-    const val POP_HL = 0xd1
-    const val RET = 0xC9
+import io.github.kotlin.fibonacci.org.kobjects.hi5.Opcode
+
+enum class Op(override val opcode: Int) : Opcode {
+    ADD_HL_BC(0x09),
+    ADD_HL_DE(0x19),
+    ADD_HL_HL(0x29),
+    ADD_HL_SP(0x39),
+    CALL(0xbd),
+    DEC_BC(0x0b),
+    DEC_DE(0x1b),
+    DEC_HL(0x2b),
+    DEC_SP(0x3b),
+    EX_DE_HL(0xeb),
+    INC_BC(0x04),
+    INC_DE(0x14),
+    INC_HL(0x24),
+    INC_SP(0x34),
+    JP_HL(0xe9),
+    JP(0xc3),
+    JP_Z(0xca),
+    JR_Z(0x28),
+    LDD(0xed_a8),
+    LD_A_H(0x7c),
+    LD_B__HL(0x46),
+    LD_C__HL(0x3e),
+    LD_H_B(0x60),
+    LD_L_C(0x69),
+    LD__HL_D(0x72),
+    LD__HL_E(0x73),
+    LD_BC_NN(0x01),
+    LD_DE_NN(0x11),
+    LD_HL_NN(0x21),
+    LD_SP_NN(0x31),
+    LD_SP_HL(0xf9),
+    NOP(0),
+    OR_A(0xb7),
+    OR_L(0xb5),
+    PUSH_AF(0xf5),
+    PUSH_BC(0xc5),
+    PUSH_DE(0xd5),
+    PUSH_HL(0xe5),
+    POP_AF(0xe1),
+    POP_BC(0xb1),
+    POP_DE(0xc1),
+    POP_HL(0xd1),
+    SBC_HL_BC(0xed_42),
+    SBC_HL_DE(0xed_52),
+    SBC_HL_HL(0xed_62),
+    SBC_HL_SP(0xed_72),
+    RET(0xC9),
 }
