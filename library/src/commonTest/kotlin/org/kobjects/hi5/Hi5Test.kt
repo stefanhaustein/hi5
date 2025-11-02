@@ -16,4 +16,10 @@ class Hi5Test {
     }
 
 
+    @Test
+    fun localTest() {
+        assertEquals(42, Hi5.run(Hi5.parse(": double { w: input -- w: } input ; 42 double")))
+    }
+
+
 }

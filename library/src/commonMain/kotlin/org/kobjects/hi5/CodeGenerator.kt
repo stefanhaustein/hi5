@@ -10,6 +10,8 @@ interface CodeGenerator {
 
     fun call(other: Function)
 
+    fun getLocal(variable: Variable, stackSize: Int)
+
     fun ret();
 
     fun openStackFrame(parameterCount: Int, localCount: Int, returnValueCount: Int)

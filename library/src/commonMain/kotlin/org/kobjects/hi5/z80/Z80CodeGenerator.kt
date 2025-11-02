@@ -3,10 +3,13 @@ package org.kobjects.hi5.z80
 import org.kobjects.hi5.CodeBuilder
 import org.kobjects.hi5.CodeGenerator
 import org.kobjects.hi5.Function
+import org.kobjects.hi5.Variable
 
 class Z80CodeGenerator(
     override val builder: CodeBuilder,
 ) : CodeGenerator {
+
+    var baseOffset = 0
 
     override fun literalS16(value: Int) {
         builder.appendOp(Op.LD_HL_NN)
@@ -27,6 +30,16 @@ class Z80CodeGenerator(
         builder.appendWord(0)
     }
 
+    override fun getLocal(variable: Variable, stackPointer: Int) {
+        builder.appendOp(Op.LD_HL_NN)
+        builder.appendWord(baseOffset + stackPointer - variable.offset)
+        builder.appendWord(Op.ADD_HL_SP)
+        builder.appendOp(Op.LD_C__HL)
+        builder.appendOp(Op.INC_HL)
+        builder.appendOp(Op.LD_B__HL)
+        builder.appendOp(Op.PUSH_BC)
+    }
+
     override fun ret() {
         builder.appendOp(Op.RET)
     }
@@ -38,6 +51,7 @@ class Z80CodeGenerator(
             builder.appendOp(Op.ADD_HL_SP)
             builder.appendOp(Op.LD_SP_HL)
         }
+        baseOffset = (parameterCount + localCount + 1) * 2
     }
 
     override fun closeStackFrame(parameterCount: Int, localCount: Int, returnValueCount: Int) {

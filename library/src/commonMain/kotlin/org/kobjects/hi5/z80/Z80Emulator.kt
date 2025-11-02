@@ -72,6 +72,8 @@ class Z80Emulator(val code: ByteArray) {
                 Op.POP_HL -> hl = pop()
                 Op.RET -> pc = pop()
                 Op.PUSH_HL -> push(hl)
+                Op.PUSH_BC -> push(bc)
+                Op.PUSH_DE -> push(de)
                 else -> throw UnsupportedOperationException("Unrecognized op: $opCode")
             }
         }

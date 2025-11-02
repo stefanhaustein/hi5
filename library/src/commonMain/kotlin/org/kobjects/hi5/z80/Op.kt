@@ -16,6 +16,9 @@ object Op {
     const val LD_HL_NN = 0x21
     const val LD_SP_HL = 0xf9
     const val NOP = 0
+    const val PUSH_AF = 0xe5
+    const val PUSH_BC = 0xb5
+    const val PUSH_DE = 0xc5
     const val PUSH_HL = 0xd5
     const val POP_AF = 0xe1
     const val POP_BC = 0xb1
