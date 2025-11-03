@@ -25,8 +25,8 @@ class Z80CodeGenerator(
     }
 
     override fun subS16() {
-        builder.appendOp(Op.POP_HL)
         builder.appendOp(Op.POP_DE)
+        builder.appendOp(Op.POP_HL)
         builder.appendOp(Op.OR_A)
         builder.appendOp(Op.SBC_HL_DE)
         builder.appendOp(Op.PUSH_HL)
@@ -46,7 +46,9 @@ class Z80CodeGenerator(
         builder.appendOp(Op.JR_Z)
         builder.appendByte(5)
         builder.appendOp(Op.LD_HL_NN)
-        builder.appendShort(1)
+        builder.appendShort(-1)
+        builder.appendOp(Op.INC_HL)
+        builder.appendOp(Op.PUSH_HL)
     }
 
     override fun getLocal(variable: Variable, stackOffset: Int) {

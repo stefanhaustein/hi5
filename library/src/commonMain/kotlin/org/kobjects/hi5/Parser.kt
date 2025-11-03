@@ -116,12 +116,12 @@ class Parser(
                         require (tracker.elseStack == stack) {
                             "if/else stack mismatch; expected: ${tracker.elseStack}; got: $stack"
                         }
-                        function.code.resolvedKeys[tracker.elseKey] = function.code.size
+                        function.code.resolvedKeys[tracker.endKey] = function.code.size
                     } else {
                         require (tracker.stack == stack) {
                             "if stack mismatch; expected: ${tracker.stack}; got: $stack"
                         }
-                        function.code.resolvedKeys[tracker.endKey] = function.code.size
+                        function.code.resolvedKeys[tracker.elseKey] = function.code.size
                     }
                 }
                 "else" -> {

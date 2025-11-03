@@ -28,7 +28,7 @@ class Hi5Test {
 
     @Test
     fun recursionTest() {
-        assertEquals(42, Hi5.run("""
+        assertEquals(21, Hi5.run("""
             : fib { w: input -- w: } 
                input 0 = if
                  0 

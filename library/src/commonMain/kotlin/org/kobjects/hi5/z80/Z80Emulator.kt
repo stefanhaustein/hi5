@@ -39,6 +39,12 @@ class Z80Emulator(code: Memory) {
         ram.setShort(sp, value)
     }
 
+    fun or(value: Int) {
+        a = (a or value) and 0xff
+        zeroFlag = a == 0
+        carryFlag = false
+    }
+
     fun sbc16(a: Int, b: Int): Int {
         val result = a - b - if (carryFlag) 1 else 0
         carryFlag = (result and 0x10000) != 0
@@ -96,18 +102,32 @@ class Z80Emulator(code: Memory) {
                 Op.INC_DE -> de = add16(de, 1)
                 Op.INC_HL -> hl = add16(hl, 1)
                 Op.INC_SP -> sp = add16(sp, 1)
+                Op.JP -> {
+                    pc = ram.getShort(pc)
+                    println()
+                }
                 Op.JP_HL -> {
                     pc = hl
                     println()
                 }
+                Op.JP_Z -> {
+                    if (zeroFlag) {
+                        pc = ram.getShort(pc)
+                        println()
+                    } else {
+                        pc = add16(pc, 2)
+                    }
+                }
                 Op.JR_Z -> {
                     if (zeroFlag) {
                         pc = add16(pc, ram.getByte(pc).toByte() - 1)
+                        println()
                     } else {
                         pc = add16(pc, 1)
                     }
                 }
                 Op.NOP -> {}
+                Op.LD_A_H -> a = (hl shr 8) and 0xff
                 Op.LD_H_B -> hl = (hl and 0x00ff) or (bc and 0xff00)
                 Op.LD_L_C -> hl = (hl and 0xff00) or (bc and 0x00ff)
                 Op.LD_C__HL -> bc = (bc and 0xff00) or ram.getByte(hl)
@@ -129,10 +149,9 @@ class Z80Emulator(code: Memory) {
                     hl = sub16(hl, 1)
                     bc = sub16(bc, 1)
                 }
-                Op.OR_A -> {
-                    carryFlag = false
-                    zeroFlag = a == 0
-                }
+                Op.OR_A -> or(a)
+                Op.OR_L -> or(hl and 0xff)
+                Op.POP_BC -> bc = pop()
                 Op.POP_DE -> de = pop()
                 Op.POP_HL -> hl = pop()
                 Op.RET -> pc = pop()
