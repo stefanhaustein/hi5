@@ -71,13 +71,13 @@ class Z80Emulator(code: Memory) {
             val opCode = Op.values().find { it.opcode == code }
             require (opCode != null) { "Unknown opcode: ${code.toHexString()}" }
 
-            print("${opCode.toString().padEnd(20)} BC:${bc.toUShort().toHexString()} DE:${de.toUShort().toHexString()} HL:${hl.toUShort().toHexString()} SP:${sp.toUShort().toHexString()} ")
-            var spi = sp
-            while (spi != 0) {
+            print("${opCode.toString().padEnd(20)} A:${a.toUByte().toHexString()} BC:${bc.toUShort().toHexString()} DE:${de.toUShort().toHexString()} HL:${hl.toUShort().toHexString()} SP:${sp.toUShort().toHexString()} ")
+            var spi = 0
+            while (spi != sp) {
+                spi = add16(spi, -2)
                 val value = ram.getShort(spi)
                 print(value.toUShort().toHexString())
                 print(' ')
-                spi = add16(spi, 2)
             }
             println()
 
